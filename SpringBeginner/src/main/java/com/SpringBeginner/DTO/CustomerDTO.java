@@ -1,14 +1,24 @@
 package com.SpringBeginner.DTO;
 
-import java.util.List;
+ 
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
 
+ 
 import org.springframework.stereotype.Component;
+ 
 
 @Component
 public class CustomerDTO {
 	private long phonNo;
+	
+	@NotNull(message="name cannot be blank")
 	private String name;
+	
+	//maiid worked after changing the import from javax to mport org.hibernate.validator.cons
+	@Email(message="Mail id not valid")
 	private String email;
+	
 	private int age;
 	private char gender;
 	private  FriendFamilyDTO  friendAndFamily;

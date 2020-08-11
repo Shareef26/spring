@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionHandle {
 
 	
+	@ExceptionHandler(Exception.class)
+	public String  exceptionHandler(Exception ex) {
+		 
+		return  ex.getMessage();
+	}
+	
 	@ExceptionHandler(NosuchCustomerException.class)
 	public ResponseEntity<ErrorMessage> exceptionHandler1(NosuchCustomerException ex){
 		
