@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SpringBeginner.DTO.CustomerDTO;
+import com.SpringBeginner.Exception.NosuchCustomerException;
 import com.SpringBeginner.Service.CustomerService;
 
 @RestController
@@ -30,8 +31,40 @@ public List<CustomerDTO> fetchCustomers(){
 	return customerservice.fetchCustomer();
 }
 
-// Request Parameter example. cant have 2 GET methods with same req mappings
 @RequestMapping("/names")
+@GetMapping(produces= "application/json")
+public CustomerDTO fetchCustomerss(@RequestParam("name") String name ) throws NosuchCustomerException {
+	CustomerDTO cust=null;
+	
+	System.out.println("Hi I am in names");
+	System.out.println(name);
+	
+	 
+	List<CustomerDTO> custlist=new ArrayList<CustomerDTO>();
+	custlist=customerservice.fetchCustomer();
+	System.out.println("list fetched");
+	
+	for(CustomerDTO c:custlist) {
+		System.out.println("passed name  " +name);
+		System.out.println("list name  "+ c.getName());
+		System.out.println("Comparing");
+		 if(name.equals(c.getName())) {
+			 System.out.println("Hi I am in for");
+			 cust=c;
+		}
+	}
+	
+	if (cust==null) {
+		 throw new NosuchCustomerException("No such CUtsomer");
+	}
+	
+	 
+	return cust;
+}
+
+
+// Request Parameter example. cant have 2 GET methods with same req mappings
+/*@RequestMapping("/names")
 @GetMapping(produces= "application/json")
 public CustomerDTO fetchCustomer(@RequestParam("name") String name ) {
 	CustomerDTO custnull=null;
